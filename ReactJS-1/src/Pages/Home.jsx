@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../Components/Header'
 import Hero from '../Components/Hero'
 import Cards from '../Components/Cards'
 import axios from 'axios'
+import { MeriShop } from '../App'
 
 function Home(){
 
-  const [products,setPrducts]=useState(null)
+const [products,setPrducts]=useState(null)
+
+let contextData=useContext(MeriShop)
+console.log(contextData);
+
 async function getData(){
 let response = await axios.get('https://dummyjson.com/products')
 console.log(response.data.products);
