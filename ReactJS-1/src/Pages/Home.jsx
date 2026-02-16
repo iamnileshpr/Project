@@ -7,7 +7,7 @@ import { MeriShop } from '../App'
 
 function Home(){
 
-const [products,setPrducts]=useState(null)
+const [products,setProducts]=useState(null)
 
 let contextData=useContext(MeriShop)
 console.log(contextData);
@@ -15,7 +15,7 @@ console.log(contextData);
 async function getData(){
 let response = await axios.get('https://dummyjson.com/products')
 console.log(response.data.products);
-setPrducts(response.data.products);
+setProducts(response.data.products);
 }
 
 useEffect(function(){
@@ -29,7 +29,7 @@ useEffect(function(){
       <div className='p-4'>
         <h1 className='text-4xl tracking-tighter font-semibold'>Our latest collection</h1>
         <div className='flex my-4 items-center flex-wrap gap-3'>
-{/*           <Cards/> */}
+               {/*<Cards/> */}
                {
                  products && products.map((items,index)=><Cards key={index} data={items}/>)
                }
