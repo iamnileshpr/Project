@@ -31,24 +31,22 @@ function SearchResult({data}) {
 export default SearchResult
 
 const Food_cont = styled.section`
-height: calc(100vh - 210px);
-width:220vh;
-background-image: url("https://wallpapers.com/images/hd/4k-b6ytxiu9nhr4w4p7.jpg");
+height: calc(150vh - 1px);
+width:210vh;
+background-image: url("https://t3.ftcdn.net/jpg/03/18/92/98/360_F_318929874_BjOfHFRXjHyJ3e3mnpg2G9nQtfc2T7DV.jpg");
 background-size: cover;
 `
 const Food_cards= styled.div`
 
 display: grid;
-  grid-template-columns: repeat(3, 1fr);  /* 👈 3 cards per row */
+  grid-template-columns: repeat(3, 1fr); 
   gap: 24px;
   padding: 40px;
 
-  /* Tablet */
   @media (max-width: 992px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Mobile */
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
   }
@@ -69,7 +67,7 @@ const Food=styled.div`
 
   .food_image {
     width: 100%;
-    height: 220px;   /* 👈 bigger image */
+    height: 220px;   
     overflow: hidden;
   }
 

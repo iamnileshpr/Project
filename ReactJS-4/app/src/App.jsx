@@ -2,11 +2,13 @@
   import { use } from 'react'
   import styled from 'styled-components'
   import SearchResult from './Components/SearchResult'
+import Footer from './Components/Footer'
   function App() {
     const [data,setData]=useState(null)
+    const [filter,setFilter]=useState(null)
     const [loading, setLoading]=useState(false)
     const [err,setErr]=useState(null)
-
+    const [selectedBtn,setSelectedBtn]=useState('all')
 
 
     useEffect(  ()=>{
@@ -16,6 +18,7 @@
           const response= await fetch('https://dummyjson.com/recipes')
           const json=await response.json()
           setData(json)
+          setFilter(json)
           setLoading(false)
         } catch (error) {
           setErr("unable to fetch data")
@@ -26,6 +29,39 @@
 
     console.log(data)
 
+    const searchFood = (e)=>{
+      const searchValue=e.target.value;
+
+      console.log(searchValue);
+
+      if(searchValue==="")
+        {setFilter(data)} 
+
+      const filterNew = data?.recipes?.filter((food)=>
+      food.name.toLowerCase().includes(searchValue.toLowerCase()));
+
+      setFilter({recipes:filterNew})
+    }
+
+    const filterFood =(mealType)=>{
+      if(mealType=='all'){
+        setFilter(data);
+        setSelectedBtn('all')
+      }
+      const filterNew1 = data?.recipes?.filter((food)=>
+      food.mealType.some((type)=>type.toLowerCase()===mealType.toLowerCase()));
+
+      setFilter({ recipes: filterNew1 })
+      setSelectedBtn(mealType)
+    }
+
+    const filterBtn=[
+      { name: "All", mealType: "all" },
+      { name: "Breakfast", mealType: "breakfast" },
+      { name: "Dinner", mealType: "dinner" },
+      { name: "Lunch", mealType: "lunch" },
+    ]
+
     if(err) return <div>{err}</div>
     if(loading) return <div>loding....</div>
     return (
@@ -35,16 +71,18 @@
           <img className='hii' src="https://dcassetcdn.com/design_img/4037633/521021/30458202/8jx4nkx5jtsyw43tm9nae7dyfs_image.jpg" alt="" />
         </div>
         <div className='search'>
-          <input type="text" placeholder='Search your food' />
+          <input onChange={searchFood} type="text" placeholder='Search your food' />
         </div>
       </Top_cont>
         <Filter_cont> 
-              <Button>All</Button>
-              <Button>Brakfast</Button>
-              <Button>Lunch</Button>
-              <Button>Dinner</Button>
+          {
+            filterBtn.map((value)=>(
+              <Button key={value.name} onClick={()=>filterFood(value.mealType)}>{value.name}</Button>
+            ))
+          }
         </Filter_cont>
-        <SearchResult data={data}/>
+        <SearchResult data={filter}/>
+        <Footer/>
 
     </Main_cont>
 
@@ -93,9 +131,15 @@
     `
 
   export const Button=styled.button`
-    background-color: red;
+    background-color: #FFAA00;
     padding: 6px 12px;
     border-radius: 5px;
     border: none;
+    font-weight: 700;
+    font-family: sans-serif;
+    &:hover{
+        background-color:#F5E7C6 ;
+        cursor: pointer;
+    }
 
   `
